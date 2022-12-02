@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class PlayerNetwork : NetworkBehaviour
 {
+    [SerializeField] Transform spawnedObjectPrefab; // interchangeable with GameObject
+    //[SerializeField] GameObject spawnedObjectPrefab;
+    Transform spawnedObjectTransform;
+
     NetworkVariable<MyCustomData> randomNumber = new NetworkVariable<MyCustomData>(
         new MyCustomData
         {
@@ -40,12 +44,21 @@ public class PlayerNetwork : NetworkBehaviour
 
         if (Input.GetKeyDown(KeyCode.T))
         {
+            spawnedObjectTransform =  Instantiate(spawnedObjectPrefab);
+            spawnedObjectTransform.GetComponent<NetworkObject>().Spawn(true);
+            /*
             randomNumber.Value = new MyCustomData
             {
                 _int = 10,
                 _bool = false,
                 message = "All your bases belong to us!"
             };
+            */
+        }
+
+        if(Input.GetKeyDown(KeyCode.Y))
+        {
+            Destroy(spawnedObjectTransform.gameObject);
         }
 
         Vector3 moveDir = new Vector3(0, 0, 0);
