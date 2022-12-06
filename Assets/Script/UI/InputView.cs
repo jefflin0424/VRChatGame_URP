@@ -27,8 +27,6 @@ public class InputView : MonoBehaviour
 
     void InputCallback(string inputText)
     {
-        int num = 0;//初始化
-
         if (IsNumberic(inputText))
         {
             clothColliderControl.SetValue(inputValue);

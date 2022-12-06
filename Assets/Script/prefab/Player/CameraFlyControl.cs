@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class CameraFlyControl : MonoBehaviour
 {
-
     public float RayMaxDistance = 50f;
     public Transform Collider;
 
@@ -19,6 +18,10 @@ public class CameraFlyControl : MonoBehaviour
 
     [SerializeField]
     bool isLocked;
+    
+    public bool iskeepShoot = false;
+
+    float timer = 0;
 
     void Start()
     {
@@ -34,7 +37,7 @@ public class CameraFlyControl : MonoBehaviour
             Plane plane = new Plane(Vector3.up, Vector3.zero);
             //在距離Vector3.zero處,創建一個方向Vector3.up的Plane 若沒打這個如果沒點到物件就不能拖動
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
+            //攝影機參考遺失要在start時重get
             RaycastHit hit;
             //Ray ray =Camera.main.ScreenPointToRay(滑鼠坐標)
 
@@ -63,21 +66,35 @@ public class CameraFlyControl : MonoBehaviour
         {
             Shoot();
         }
+        else if (iskeepShoot)
+        {
+            Shoot();
+        }
 
         if (isLocked == true) cameraRotation(); //攝影機跟隨滑鼠
     }
 
-    void Shoot()
+    public void Shoot()
     {
-        GameObject newarrow = Instantiate(arrowprefab, firePoint.position, firePoint.rotation);//生成一個新物體
+        if (iskeepShoot) timer += Time.deltaTime;
 
-        //weapon = newarrow.GetComponent<WeaponCollision>();//碰撞器=新生成箭<WeaponCollision>的collision
-        //weapon.onHit.AddListener((target) => HitTarget(target));//事件同步
+        if (timer >= 2f && iskeepShoot)
+        {
+            GameObject newarrow = Instantiate(arrowprefab, firePoint.position, firePoint.rotation);//生成一個新物體
+            timer = 0f;//執行完歸0
 
-        //不給子彈力改由子彈往前行
-        //Rigidbody rig = newarrow.GetComponent<Rigidbody>();
-        //Vector3 fwd = transform.TransformDirection(Vector3.forward);//轉換方向 前方
-        //rig.AddForce(fwd * Force);//給物加力，發射出去
+            //weapon = newarrow.GetComponent<WeaponCollision>();//碰撞器=新生成箭<WeaponCollision>的collision
+            //weapon.onHit.AddListener((target) => HitTarget(target));//事件同步
+
+            //不給子彈力改由子彈往前行
+            //Rigidbody rig = newarrow.GetComponent<Rigidbody>();
+            //Vector3 fwd = transform.TransformDirection(Vector3.forward);//轉換方向 前方
+            //rig.AddForce(fwd * Force);//給物加力，發射出去
+        }
+        else if (!iskeepShoot)
+        {
+            GameObject newarrow = Instantiate(arrowprefab, firePoint.position, firePoint.rotation);//生成一個新物體
+        }
     }
 
     void cameraRotation()
