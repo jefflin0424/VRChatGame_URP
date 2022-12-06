@@ -5,6 +5,9 @@ using UnityEngine;
 public class PlayerNetwork : NetworkBehaviour
 {
     [SerializeField] Transform spawnedObjectPrefab; // interchangeable with GameObject
+    [SerializeField] float mouseSensitivity = 100f;
+    [SerializeField] short moveSpeed = 3;
+    private GameObject _camera;
     //[SerializeField] GameObject spawnedObjectPrefab;
     Transform spawnedObjectTransform;
 
@@ -17,6 +20,7 @@ public class PlayerNetwork : NetworkBehaviour
         NetworkVariableReadPermission.Everyone,
         NetworkVariableWritePermission.Owner);
     private object input;
+    private Vector3 _mouse;
 
     public struct MyCustomData : INetworkSerializable
     {
@@ -31,6 +35,7 @@ public class PlayerNetwork : NetworkBehaviour
             serializer.SerializeValue(ref message);
         }
     }
+
     public override void OnNetworkSpawn()
     {
         randomNumber.OnValueChanged += (MyCustomData previousValue, MyCustomData newValue) =>
@@ -39,9 +44,18 @@ public class PlayerNetwork : NetworkBehaviour
         };
     }
 
+    private void Start()
+    {
+        _camera = GameObject.Find("Main Camera");
+        _mouse = new Vector3(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"), 0);
+    }
+
     void Update()
     {
         if (!IsOwner) return;
+
+        _camera.transform.position = transform.position;
+        _camera.transform.rotation = transform.rotation;
 
         if (Input.GetKeyDown(KeyCode.T))
         {
@@ -62,13 +76,13 @@ public class PlayerNetwork : NetworkBehaviour
             Destroy(spawnedObjectTransform.gameObject);
         }
 
-        Vector3 movedir = new Vector3(0, 0, 0);
-        if (Input.GetKey(KeyCode.W)) movedir.z += 1f;
-        if (Input.GetKey(KeyCode.S)) movedir.z = -1f;
-        if (Input.GetKey(KeyCode.A)) movedir.x = -1f;
-        if (Input.GetKey(KeyCode.D)) movedir.x = +1f;
+        if (Input.GetKey(KeyCode.W)) transform.position += transform.forward * moveSpeed * Time.deltaTime;
+        if (Input.GetKey(KeyCode.S)) transform.position -= transform.forward * moveSpeed * Time.deltaTime;
+        if (Input.GetKey(KeyCode.A)) transform.position -= transform.right * moveSpeed * Time.deltaTime;
+        if (Input.GetKey(KeyCode.D)) transform.position += transform.right * moveSpeed * Time.deltaTime;
 
-        float movespeed = 3f;
-        transform.position += movedir * movespeed * Time.deltaTime;
+        //mouse movemenet
+        _mouse += new Vector3(-Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X"), 0) * mouseSensitivity * Time.deltaTime;
+        transform.rotation = Quaternion.Euler(_mouse);
     }
 }
