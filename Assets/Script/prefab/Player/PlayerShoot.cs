@@ -2,32 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraFlyControl : MonoBehaviour
+public class PlayerShoot : MonoBehaviour
 {
     public float RayMaxDistance = 50f;
     public Transform Collider;
 
     public GameObject arrowprefab;
     public Transform firePoint;
-    public float Force = 10f;
 
-    public float mouseSensitivity = 300f;
-
-    float xRotation = 0f;
-    float yRotation = 0f;
-
-    [SerializeField]
-    bool isLocked;
-    
-    public bool iskeepShoot = false;
+    public bool keepShoot = false;
 
     float timer = 0;
 
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked; //隱藏遊標
-
-        isLocked = true;
+        
     }
 
     void Update()
@@ -48,37 +37,21 @@ public class CameraFlyControl : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            if (Cursor.lockState == CursorLockMode.Locked)
-            {
-                Cursor.lockState = CursorLockMode.None;
-                isLocked = false;
-            }
-            else
-            {
-                Cursor.lockState = CursorLockMode.Locked;
-                isLocked = true;
-            }
-        }
-
         if (Input.GetMouseButtonDown(1)) //&& isTouch == false
         {
             Shoot();
         }
-        else if (iskeepShoot)
+        else if (keepShoot)
         {
             Shoot();
         }
-
-        if (isLocked == true) cameraRotation(); //攝影機跟隨滑鼠
     }
 
     public void Shoot()
     {
-        if (iskeepShoot) timer += Time.deltaTime;
+        if (keepShoot) timer += Time.deltaTime;
 
-        if (timer >= 2f && iskeepShoot)
+        if (timer >= 2f && keepShoot)
         {
             GameObject newarrow = Instantiate(arrowprefab, firePoint.position, firePoint.rotation);//生成一個新物體
             timer = 0f;//執行完歸0
@@ -91,24 +64,9 @@ public class CameraFlyControl : MonoBehaviour
             //Vector3 fwd = transform.TransformDirection(Vector3.forward);//轉換方向 前方
             //rig.AddForce(fwd * Force);//給物加力，發射出去
         }
-        else if (!iskeepShoot)
+        else if (!keepShoot)
         {
             GameObject newarrow = Instantiate(arrowprefab, firePoint.position, firePoint.rotation);//生成一個新物體
         }
-    }
-
-    void cameraRotation()
-    {
-        //旋轉攝影機的視角
-        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
-
-        xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation, -60f, 60f); // 限制視角上下移動角度
-
-        yRotation += mouseX;
-        //yRotation = Mathf.Clamp(yRotation, -50f, 50f); // 限制視角左右移動角度
-
-        transform.localRotation = Quaternion.Euler(xRotation, yRotation, 0f);
     }
 }
