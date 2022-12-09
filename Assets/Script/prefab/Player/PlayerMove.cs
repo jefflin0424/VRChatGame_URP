@@ -22,23 +22,23 @@ public class PlayerMove : MonoBehaviour
 
     void MoveControl()
     {
-        //var playerEuler = transform.rotation.eulerAngles;        
+        var playerEuler = transform.rotation.eulerAngles;        
 
         if (Input.GetKey(KeyCode.W))
         {
-            transform.position += transform.forward * Time.deltaTime * 3f;
+            transform.localPosition += transform.forward * Time.deltaTime * 3f;
         }
-        if (Input.GetKey(KeyCode.S))
+        else if (Input.GetKey(KeyCode.S))
         {
-            transform.position -= transform.forward * Time.deltaTime * 3f;
+            transform.localPosition -= transform.forward * Time.deltaTime * 3f;
         }
-        if (Input.GetKey(KeyCode.A))
+        else if (Input.GetKey(KeyCode.A))
         {
-            transform.position -= transform.right * Time.deltaTime * 3f;
+            transform.localPosition -= transform.right * Time.deltaTime * 3f;
         }
-        if (Input.GetKey(KeyCode.D))
+        else if (Input.GetKey(KeyCode.D))
         {
-            transform.position += transform.right * Time.deltaTime * 3f;
+            transform.localPosition += transform.right * Time.deltaTime * 3f;
         }
     }
 }
