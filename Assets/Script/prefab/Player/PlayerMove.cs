@@ -4,11 +4,9 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
-    [SerializeField]
-    float move = 0.25f;
+    //[SerializeField] float move = 0.25f;
 
-    [SerializeField]
-    Transform transform;
+    [SerializeField] Transform _transform;
 
     void Start()
     {
@@ -22,23 +20,23 @@ public class PlayerMove : MonoBehaviour
 
     void MoveControl()
     {
-        var playerEuler = transform.rotation.eulerAngles;        
+        var playerEuler = _transform.rotation.eulerAngles;        
 
         if (Input.GetKey(KeyCode.W))
         {
-            transform.localPosition += transform.forward * Time.deltaTime * 3f;
+            _transform.localPosition += _transform.forward * Time.deltaTime * 3f;
         }
         else if (Input.GetKey(KeyCode.S))
         {
-            transform.localPosition -= transform.forward * Time.deltaTime * 3f;
+            _transform.localPosition -= _transform.forward * Time.deltaTime * 3f;
         }
         else if (Input.GetKey(KeyCode.A))
         {
-            transform.localPosition -= transform.right * Time.deltaTime * 3f;
+            _transform.localPosition -= _transform.right * Time.deltaTime * 3f;
         }
         else if (Input.GetKey(KeyCode.D))
         {
-            transform.localPosition += transform.right * Time.deltaTime * 3f;
+            _transform.localPosition += _transform.right * Time.deltaTime * 3f;
         }
     }
 }
