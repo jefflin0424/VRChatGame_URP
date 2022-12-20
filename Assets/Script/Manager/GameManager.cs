@@ -1,59 +1,38 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
+using Unity.Netcode;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
-{
+public class GameManager : NetworkBehaviour {
+    [SerializeField] GameObject player;
     public static GameManager Instance;
-
-    public GameState State;
-
-    public static event Action<GameState> OnGameStateChange;
-
-    public GameObject player;
 
     void Awake()
     {
         Instance = this;
-        DontDestroyOnLoad(this);    
-    }
-
-    public void UpdateGameState(GameState newState)
-    {
-        State = newState;
-
-        switch (newState)
-        {
-            case GameState.state1:
-                function1();
-                break;
-            case GameState.state2:
-                break;
-            case GameState.state3:
-                break;
-            default:
-                throw new ArgumentOutOfRangeException(nameof(newState), newState, null);
-        }
-        OnGameStateChange?.Invoke(newState);
+        //DontDestroyOnLoad(this);
     }
 
     void Start()
     {
         var findObjects = FindObjectOfType<DynamicBone>();
-        UpdateGameState(GameState.state1);
     }
 
-    void function1()
-    {
+    #region netcode
+    [SerializeField] private PlayerController _playerPrefab;
+    [SerializeField] GameObject mainCamera;
+    public override void OnNetworkSpawn() {
+        SpawnPlayerServerRpc(NetworkManager.Singleton.LocalClientId);
+    }   
 
+    [ServerRpc(RequireOwnership = false)]
+    private void SpawnPlayerServerRpc(ulong playerId) {
+        var spawn = Instantiate(_playerPrefab);
+        spawn.NetworkObject.SpawnWithOwnership(playerId);
     }
-}
 
-public enum GameState
-{
-    state1,
-    state2,
-    state3,
+    public override void OnDestroy() {
+        base.OnDestroy();
+        MatchmakingService.LeaveLobby();
+        if(NetworkManager.Singleton != null )NetworkManager.Singleton.Shutdown();
+    }
+    #endregion
 }

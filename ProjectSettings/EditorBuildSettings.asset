@@ -6,15 +6,23 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
-    path: 
-    guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 1
     path: Assets/Scenes/ClassScene.unity
     guid: 74d1f1f6a78981949a45ae4a876777c7
   - enabled: 1
-    path: Assets/Netcode/Netcode.unity
-    guid: e4b3a991de9d7dc4bb6d8995ed6440b6
+    path: Assets/Netcode/Scenes/Auth.unity
+    guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Netcode/Scenes/Game.unity
+    guid: f8126672cae872d4fb1770d68c3a6a3d
+  - enabled: 1
+    path: Assets/Netcode/Scenes/Lobby.unity
+    guid: 1c590ef88b0434e45a0236a04c4333dc
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: 0a475cd781e04ef4ab8b4c839c203689,
+      type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: f75888abc5c91ee4197b1e39fb637fe0,
       type: 2}
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: a57f2db0dc77c5846920993cc59fb223,

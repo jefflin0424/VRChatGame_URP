@@ -848,7 +848,13 @@ PlayerSettings:
   XboxOneOverrideIdentityName: 
   XboxOneOverrideIdentityPublisher: 
   vrEditorSettings: {}
-  cloudServicesEnabled: {}
+  cloudServicesEnabled:
+    Build: 0
+    Collab: 0
+    Game Performance: 0
+    Purchasing: 0
+    UDP: 0
+    Unity Ads: 0
   luminIcon:
     m_Name: 
     m_ModelFolderPath: 
@@ -863,10 +869,10 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: a6f0789e-a475-4215-940a-f0eba09fea2a
+  cloudProjectId: a490ba72-61c9-445b-bbd6-bc6384528171
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: VRChat
+  projectName: Lewd VRChat
   organizationId: grempire
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
