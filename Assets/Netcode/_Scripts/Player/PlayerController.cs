@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerController : NetworkBehaviour {
-    [SerializeField] private float _speed = 3, _mouseSensitivity = 300;
+    [SerializeField] private float _speed = 3, _mouseSensitivity = 100;
     private Rigidbody _rb;
     GameObject _camera;
     Vector3 _mousePos;

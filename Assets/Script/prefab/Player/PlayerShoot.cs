@@ -6,7 +6,7 @@ public class PlayerShoot : MonoBehaviour
 {
     [Header("ShootModeSetting")]
     public float RayMaxDistance = 50f;
-    public Transform Collider;
+    public Transform touchCollider;
 
     public GameObject arrowprefab;
     public Transform firePoint;
@@ -27,6 +27,11 @@ public class PlayerShoot : MonoBehaviour
 
     [SerializeField]
     LayerMask targetMark;
+
+    private void Awake()
+    {
+        touchCollider = GameObject.Find("TouchCollider").transform;
+    }
 
     void Start()
     {
@@ -78,7 +83,7 @@ public class PlayerShoot : MonoBehaviour
                 if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))
                 {
                     Debug.DrawRay(ray.origin, ray.direction * 100f, Color.blue);
-                    Collider.position = hit.point;
+                    touchCollider.position = hit.point;
                 }
             }
         }
