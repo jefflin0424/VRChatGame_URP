@@ -6,38 +6,25 @@ public class BulletHit : MonoBehaviour
 {
     [SerializeField]
     bool oneShoot = true;
-    // Start is called before the first frame update
+
     void Start()
     {
 
     }
 
-    // Update is called once per frame
-    void Update()
+    void OnCollisionEnter(Collision collision)
     {
+        if (oneShoot == false) return;
 
-    }
-
-    void FixedUpdate()
-    {
-        if (oneShoot) Shoot();
-    }
-
-    void Shoot()
-    {
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 2f))
+        if (collision.gameObject.tag == "Breast")
         {
-            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
-            //Vector3.forward =方向
-            Debug.Log($"{hit.collider.tag}");
-            //if (hit.collider.tag == "Breast")
-            //{
-            //    var clothColliderControl = hit.collider.GetComponent<ClothBlendShapeWeight>();
-            //    clothColliderControl.SetValue(10);
-            //}
-        }
+            //Debug.Log($"OnCollision");
+            //ChangeRenderMaterial();//衣服透明函式
+            collision.gameObject.TryGetComponent<BreastCollider>(out var breastCollider);
 
-        oneShoot = false;
+            breastCollider.beHit();
+
+            oneShoot = false;
+        }
     }
 }

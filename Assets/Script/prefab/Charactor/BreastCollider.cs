@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿
+using System.Collections;
+using UnityEngine;
 
 public class BreastCollider : MonoBehaviour
 {
@@ -12,30 +14,30 @@ public class BreastCollider : MonoBehaviour
 
     void Start()
     {
-        playerAnimator = transform.GetComponent<Animator>();
+
     }
 
-    private void OnTriggerEnter(Collider collision)
-    {
-        if (collision.gameObject.tag == "Bullet")
-        {
-            Debug.Log($"OnTrigger");
+    //private void OnTriggerEnter(Collider collision)
+    //{
+    //    if (collision.gameObject.tag == "Bullet")
+    //    {
+    //        Debug.Log($"OnTrigger");
 
-            clothBlendShapeWeight.SetValue(20);
+    //        clothBlendShapeWeight.SetValue(20);
 
-            //ChangeRenderMaterial();//衣服透明函式
-        }
-    }
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.tag == "Bullet")
-            {
-            Debug.Log($"OnCollision");
+    //        //ChangeRenderMaterial();//衣服透明函式
+    //    }
+    //}
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if (collision.gameObject.tag == "Bullet")
+    //        {
+    //        Debug.Log($"OnCollision");
 
-            clothBlendShapeWeight.SetValue(20);
-            //ChangeRenderMaterial();//衣服透明函式
-        }
-    }
+    //        clothBlendShapeWeight.SetValue(20);
+    //        //ChangeRenderMaterial();//衣服透明函式
+    //    }
+    //}
 
     void ChangeRenderMaterial()
     {
@@ -57,5 +59,19 @@ public class BreastCollider : MonoBehaviour
                 material.color = color;//新color.alpha值寫入原material.color
             }
         }
+    }
+
+    public void beHit()
+    {
+        StartCoroutine(OnWaitAnimation());
+    }
+
+    IEnumerator OnWaitAnimation()
+    {
+        playerAnimator.SetBool("Ducking", true);
+
+        yield return new WaitForSeconds(1.5f);
+
+        playerAnimator.SetBool("Ducking", false);
     }
 }
