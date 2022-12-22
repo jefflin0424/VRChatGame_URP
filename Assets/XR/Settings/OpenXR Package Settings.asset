@@ -91,9 +91,7 @@ MonoBehaviour:
   - {fileID: 2706463280209797147}
   - {fileID: 3112982281610542775}
   - {fileID: -3831706952770749194}
-  - {fileID: 5940700775219840415}
   - {fileID: -4119589051587350829}
-  - {fileID: 8077107285912820546}
   - {fileID: 3860013498684322324}
   - {fileID: 6337013524599692985}
   - {fileID: 2381040310907614325}
@@ -218,6 +216,7 @@ MonoBehaviour:
   m_Name: InterceptCreateSessionFeature Standalone
   m_EditorClassIdentifier: 
   m_enabled: 1
+  <failedInitialization>k__BackingField: 0
   nameUi: 'Sample: Intercept Create Session'
   version: 0.0.1
   featureIdInternal: com.unity.openxr.feature.example.intercept
@@ -226,6 +225,7 @@ MonoBehaviour:
   priority: 0
   required: 0
   message: Hello from C#!
+  <receivedMessage>k__BackingField: 
 --- !u!114 &6337013524599692985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -258,7 +258,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d6ccd3d0ef0f1d458e69421dccbdae1, type: 3}
   m_Name: ValveIndexControllerProfile Standalone
   m_EditorClassIdentifier: 
-  m_enabled: 0
+  m_enabled: 1
   nameUi: Valve Index Controller Profile
   version: 0.0.1
   featureIdInternal: com.unity.openxr.feature.input.valveindex
@@ -279,6 +279,7 @@ MonoBehaviour:
   m_Name: MeshingTeapotFeature Standalone
   m_EditorClassIdentifier: 
   m_enabled: 1
+  <failedInitialization>k__BackingField: 0
   nameUi: 'Sample: Meshing Teapot'
   version: 0.0.1
   featureIdInternal: com.unity.openxr.feature.example.meshing

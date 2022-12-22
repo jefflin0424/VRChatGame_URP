@@ -2,7 +2,7 @@ using Unity.Netcode;
 using UnityEngine;
 
 public class GameManager : NetworkBehaviour {
-    [SerializeField] GameObject player;
+    //[SerializeField] GameObject player;
     public static GameManager Instance;
 
     void Awake()
@@ -18,7 +18,7 @@ public class GameManager : NetworkBehaviour {
 
     #region netcode
     [SerializeField] private PlayerController _playerPrefab;
-    [SerializeField] GameObject mainCamera;
+    //[SerializeField] GameObject mainCamera;
     public override void OnNetworkSpawn() {
         SpawnPlayerServerRpc(NetworkManager.Singleton.LocalClientId);
     }   
