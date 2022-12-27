@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : NetworkBehaviour {
     [SerializeField] private float _speed = 3, _mouseSensitivity = 100;
+    [SerializeField] Vector2 spawnArea = new Vector2(5, 5);
     private Rigidbody _rb;
     GameObject _camera;
     Vector3 _mousePos;
@@ -34,5 +35,7 @@ public class PlayerController : NetworkBehaviour {
 
     public override void OnNetworkSpawn() {
         if (!IsOwner) Destroy(this);
+
+        transform.position = new Vector3(Random.Range(spawnArea.x, spawnArea.y), 0, Random.Range(spawnArea.x, spawnArea.y));
     }
 }
