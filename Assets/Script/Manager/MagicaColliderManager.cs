@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using MagicaCloth;
 
 public class MagicaColliderManager : MonoBehaviour
 {

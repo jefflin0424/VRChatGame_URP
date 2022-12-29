@@ -1,16 +1,17 @@
 ﻿using UnityEngine;
 
-using AmazingAssets.AdvancedDissolve;
-
-
 namespace AmazingAssets.AdvancedDissolve.ExampleScripts
 {
     public class AnimateShaderCutout : MonoBehaviour
     {
-        [SerializeField]
-        Material material;
+        Renderer mr;
 
-        public Material tempMaterial;
+        [SerializeField]
+        Material orginMaterial;//原始材質球
+
+        public Material tempMaterial;//溶解材質球
+        [SerializeField] 
+        Texture orginTexture;//原始貼圖
 
         float offset;
         [SerializeField]
@@ -29,9 +30,9 @@ namespace AmazingAssets.AdvancedDissolve.ExampleScripts
 
         private void Start()
         {
-            material = GetComponent<Renderer>().material;
+            orginMaterial = GetComponent<Renderer>().material;
 
-            AdvancedDissolveProperties.Cutout.Standard.UpdateLocalProperty(material, AdvancedDissolveProperties.Cutout.Standard.Property.Clip, 0f);
+            orginTexture = orginMaterial.mainTexture;
 
             //speed = Random.Range(0.1f, 0.2f);
             speed = 0.12f;
@@ -46,19 +47,21 @@ namespace AmazingAssets.AdvancedDissolve.ExampleScripts
         {
             isStart = start;
             inHide = start;
+
+            InitShaderCutout();
         }
 
         public void StartShow(bool start)
         {
             isStart = start;
             isShow = start;
+
+            InitShaderCutout();
         }
 
         //溶解
         void ChangeShader()
         {
-            var mr = GetComponent<SkinnedMeshRenderer>();
-            mr.material = tempMaterial;
             //clip:1f透明 0.01不透明
             if (inHide)
             {
@@ -72,7 +75,6 @@ namespace AmazingAssets.AdvancedDissolve.ExampleScripts
                     inHide = false;
 
                     AdvancedDissolveProperties.Cutout.Standard.UpdateLocalProperty(mr.material, AdvancedDissolveProperties.Cutout.Standard.Property.Clip, 1f);
-                    //timeOut = true;
                 }
 
                 AdvancedDissolveProperties.Cutout.Standard.UpdateLocalProperty(mr.material, AdvancedDissolveProperties.Cutout.Standard.Property.Clip, clip);
@@ -89,13 +91,20 @@ namespace AmazingAssets.AdvancedDissolve.ExampleScripts
                     isShow = false;
 
                     AdvancedDissolveProperties.Cutout.Standard.UpdateLocalProperty(mr.material, AdvancedDissolveProperties.Cutout.Standard.Property.Clip, 0f);
-                    //timeOut = true;
                 }
 
                 AdvancedDissolveProperties.Cutout.Standard.UpdateLocalProperty(mr.material, AdvancedDissolveProperties.Cutout.Standard.Property.Clip, clip);
             }
 
             time += Time.deltaTime * 3f;
+        }
+
+        void InitShaderCutout()
+        {
+            mr = GetComponent<Renderer>();
+
+            mr.material = tempMaterial;//替換溶解材質球
+           if (mr.material.HasProperty("_BaseMap")) mr.material.SetTexture("_BaseMap", orginTexture);//溶解材質球換原本貼圖
         }
     }
 }

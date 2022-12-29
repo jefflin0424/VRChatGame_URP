@@ -44,7 +44,7 @@ public class PlayerShoot : MonoBehaviour
 
         if (Input.GetMouseButton(1))
         {
-            Shoot();
+            if (Cursor.lockState == CursorLockMode.Locked) Shoot();
         }
         else
         {

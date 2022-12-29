@@ -22,7 +22,7 @@ public class BulletHit : MonoBehaviour
             //ChangeRenderMaterial();//衣服透明函式
             collision.gameObject.TryGetComponent<BreastCollider>(out var breastCollider);
 
-            breastCollider.beHit();
+            breastCollider.BeHit();
 
             oneShoot = false;
         }

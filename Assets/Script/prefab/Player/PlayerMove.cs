@@ -6,11 +6,11 @@ public class PlayerMove : MonoBehaviour
 {
     //[SerializeField] float move = 0.25f;
 
-    [SerializeField] Transform transform;
+    [SerializeField] Transform playerTrans;
 
     void Start()
     {
-        transform = GetComponent<Transform>();
+        playerTrans = GetComponent<Transform>();
     }
 
     void Update()
@@ -20,25 +20,25 @@ public class PlayerMove : MonoBehaviour
 
     void MoveControl()
     {
-        if (transform == null) return;
+        if (playerTrans == null) return;
 
-        var playerEuler = transform.rotation.eulerAngles;
+        var playerEuler = playerTrans.rotation.eulerAngles;
 
         if (Input.GetKey(KeyCode.W))
         {
-            transform.localPosition += transform.forward * Time.deltaTime * 3f;
+            playerTrans.localPosition += playerTrans.forward * Time.deltaTime * 3f;
         }
         else if (Input.GetKey(KeyCode.S))
         {
-            transform.localPosition -= transform.forward * Time.deltaTime * 3f;
+            playerTrans.localPosition -= playerTrans.forward * Time.deltaTime * 3f;
         }
         else if (Input.GetKey(KeyCode.A))
         {
-            transform.localPosition -= transform.right * Time.deltaTime * 3f;
+            playerTrans.localPosition -= playerTrans.right * Time.deltaTime * 3f;
         }
         else if (Input.GetKey(KeyCode.D))
         {
-            transform.localPosition += transform.right * Time.deltaTime * 3f;
+            playerTrans.localPosition += playerTrans.right * Time.deltaTime * 3f;
         }
     }
 }

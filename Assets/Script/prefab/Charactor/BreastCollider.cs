@@ -1,34 +1,28 @@
 ﻿
+using System;
 using System.Collections;
 using UnityEngine;
 
 public class BreastCollider : MonoBehaviour
 {
+    [SerializeField]
+    Transform parentTran;
+
+    [SerializeField]
+    Animator playerAnimator;
+
     public SkinnedMeshRenderer meshRenderer;
 
     [SerializeField]
     ClothBlendShapeWeight clothBlendShapeWeight;
 
-    [SerializeField]
-    Animator playerAnimator;
+    public Action HitCallback;
 
     void Start()
     {
-
+        playerAnimator = parentTran.GetComponent<Animator>();
     }
-
-    //private void OnTriggerEnter(Collider collision)
-    //{
-    //    if (collision.gameObject.tag == "Bullet")
-    //    {
-    //        Debug.Log($"OnTrigger");
-
-    //        clothBlendShapeWeight.SetValue(20);
-
-    //        //ChangeRenderMaterial();//衣服透明函式
-    //    }
-    //}
-    //private void OnCollisionEnter(Collision collision)
+    //void OnCollisionEnter(Collision collision)
     //{
     //    if (collision.gameObject.tag == "Bullet")
     //        {
@@ -61,9 +55,10 @@ public class BreastCollider : MonoBehaviour
         }
     }
 
-    public void beHit()
+    public void BeHit()
     {
-        StartCoroutine(OnWaitAnimation());
+        HitCallback?.Invoke();
+        //StartCoroutine(OnWaitAnimation());
     }
 
     IEnumerator OnWaitAnimation()

@@ -13,7 +13,7 @@ public class GameManager : NetworkBehaviour {
 
     void Start()
     {
-        var findObjects = FindObjectOfType<DynamicBone>();
+
     }
 
     #region netcode

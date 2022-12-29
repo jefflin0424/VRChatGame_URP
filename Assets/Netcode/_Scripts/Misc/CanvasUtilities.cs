@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using DG.Tweening;
 using DG.Tweening.Core;
 using DG.Tweening.Plugins.Options;
@@ -44,8 +44,9 @@ public class CanvasUtilities : MonoBehaviour {
     private readonly Vector2 _hotSpot = Vector2.zero;
     
     private void Update() {
-        if (Input.GetMouseButtonDown(0)) SetCursor(_clickedCursorTexture);
-        else if (Input.GetMouseButtonUp(0)) SetCursor(_cursorTexture);
+        //netcode範本的預設遊標按下/放開 暫時註解
+        //if (Input.GetMouseButtonDown(0)) SetCursor(_clickedCursorTexture);
+        //else if (Input.GetMouseButtonUp(0)) SetCursor(_cursorTexture);
     }
 
     private void SetCursor(Texture2D tex) => Cursor.SetCursor(tex, _hotSpot, CursorMode);
