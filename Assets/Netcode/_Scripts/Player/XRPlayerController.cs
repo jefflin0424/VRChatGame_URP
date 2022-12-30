@@ -3,8 +3,8 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class XRPlayerController : NetworkBehaviour {
-
-    public override void OnNetworkSpawn() {
-        if (!IsOwner) Destroy(this);
+    private void Awake()
+    {
+        if (!IsHost) Destroy(gameObject);
     }
 }

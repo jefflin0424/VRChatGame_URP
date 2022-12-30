@@ -11,11 +11,6 @@ public class GameManager : NetworkBehaviour {
         //DontDestroyOnLoad(this);
     }
 
-    void Start()
-    {
-
-    }
-
     #region netcode
     [SerializeField] private PlayerController _playerPrefab;
     //[SerializeField] GameObject mainCamera;
