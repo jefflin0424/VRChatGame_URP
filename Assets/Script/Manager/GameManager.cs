@@ -1,5 +1,6 @@
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.Animations;
 
 public class GameManager : NetworkBehaviour {
     //[SerializeField] GameObject player;
@@ -8,19 +9,19 @@ public class GameManager : NetworkBehaviour {
     void Awake()
     {
         Instance = this;
-        //DontDestroyOnLoad(this);
-    }
-
-    void Start()
-    {
-
+        DontDestroyOnLoad(this);
     }
 
     #region netcode
-    [SerializeField] private PlayerController _playerPrefab;
-    //[SerializeField] GameObject mainCamera;
+    [SerializeField] private NetworkPlayerController _playerPrefab;
+    [SerializeField] Transform headTarget, xrOrigin;
     public override void OnNetworkSpawn() {
         SpawnPlayerServerRpc(NetworkManager.Singleton.LocalClientId);
+        if(!IsHost)
+        {
+            Destroy(headTarget.GetComponent<ParentConstraint>());
+            Destroy(xrOrigin.gameObject);
+        }
     }   
 
     [ServerRpc(RequireOwnership = false)]

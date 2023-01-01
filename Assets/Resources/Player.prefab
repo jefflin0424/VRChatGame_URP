@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 3842439745336050202}
   - component: {fileID: 3842439745336050203}
   - component: {fileID: 7522376070054517750}
-  - component: {fileID: 1278867679}
+  - component: {fileID: 8283616514450076191}
+  - component: {fileID: 8283616514450076192}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -28,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3842439745336050205}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -78,9 +79,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0b1063118f069e4a871ae446a86898a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  move: 0.25
-  transform: {fileID: 3842439745336050204}
---- !u!114 &1278867679
+  playerTrans: {fileID: 0}
+--- !u!114 &8283616514450076191
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -89,14 +89,35 @@ MonoBehaviour:
   m_GameObject: {fileID: 3842439745336050205}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d53d98d9c4141c4e81d6c3b51e0e0d9, type: 3}
+  m_Script: {fileID: 11500000, guid: 4c5561650fb2326408c94a56cb04fc67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RayMaxDistance: 20
-  Collider: {fileID: 0}
+  RayMaxDistance: 50
+  touchCollider: {fileID: 0}
   arrowprefab: {fileID: 5152262620589727578, guid: 0a7ad1851e159884cb41f5c0a5d85dda,
     type: 3}
   firePoint: {fileID: 3842439745970264691}
+  timer: 0
+  cursorTexture: {fileID: 2800000, guid: a2ff8b4e745289d4c80fbb9a5f6a0c6f, type: 3}
+  cursorTexture2: {fileID: 2800000, guid: 9336362bc90b6e24e896b6e5681ce420, type: 3}
+  cursorMode: 0
+  hotSpot: {x: 0, y: 0}
+  targetMark:
+    serializedVersion: 2
+    m_Bits: 64
+--- !u!114 &8283616514450076192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3842439745336050205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da77a35c7c39ff14999fe4310be4ff34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RayMaxDistance: 50
   Force: 500
   mouseSensitivity: 300
   isLocked: 0
@@ -112,7 +133,6 @@ GameObject:
   - component: {fileID: 3842439745819752727}
   - component: {fileID: 3842439745819752712}
   - component: {fileID: 1466378264}
-  - component: {fileID: 1466378268}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -128,7 +148,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3842439745819752716}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -159,7 +179,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0.1
   far clip plane: 1000
   field of view: 60
   orthographic: 0
@@ -220,79 +240,6 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
---- !u!114 &1466378268
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3842439745819752716}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2fadf230d1919748a9aa21d40f74619, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_TrackingType: 0
-  m_UpdateType: 0
-  m_PositionInput:
-    m_UseReference: 0
-    m_Action:
-      m_Name: Position
-      m_Type: 0
-      m_ExpectedControlType: Vector3
-      m_Id: 968672bb-b3d2-46b9-b72d-e88aca39d545
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings:
-      - m_Name: 
-        m_Id: 7f0b091e-3462-4048-9738-4ad39b7c3446
-        m_Path: <XRHMD>/centerEyePosition
-        m_Interactions: 
-        m_Processors: 
-        m_Groups: 
-        m_Action: Position
-        m_Flags: 0
-      m_Flags: 0
-    m_Reference: {fileID: 0}
-  m_RotationInput:
-    m_UseReference: 0
-    m_Action:
-      m_Name: Rotation
-      m_Type: 0
-      m_ExpectedControlType: Quaternion
-      m_Id: 16b0c517-48e3-487d-807e-0bee3c7c6cb5
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings:
-      - m_Name: 
-        m_Id: 2a88749e-6577-4983-b437-722fe0611b12
-        m_Path: <XRHMD>/centerEyeRotation
-        m_Interactions: 
-        m_Processors: 
-        m_Groups: 
-        m_Action: Rotation
-        m_Flags: 0
-      m_Flags: 0
-    m_Reference: {fileID: 0}
-  m_PositionAction:
-    m_Name: 
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  m_RotationAction:
-    m_Name: 
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  m_HasMigratedActions: 1
 --- !u!1 &3842439745970264692
 GameObject:
   m_ObjectHideFlags: 0
@@ -317,7 +264,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3842439745970264692}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1}
+  m_LocalPosition: {x: 0, y: -0.2, z: 0.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
