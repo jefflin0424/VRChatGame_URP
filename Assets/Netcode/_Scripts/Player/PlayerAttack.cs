@@ -1,18 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
 
-public class PlayerAttack : MonoBehaviour
+public class PlayerAttack : NetworkBehaviour
 {
     [Header("ShootModeSetting")]
-    public float RayMaxDistance = 50f;
+    [SerializeField] float RayMaxDistance = 50, bulletDuration = 1.5f;
     [SerializeField] Transform _touchCollider;
 
     public GameObject arrowprefab;
     public Transform firePoint;
 
-    [SerializeField]
-    float timer = 0f;
+    [SerializeField] float timer = 0;
 
     [Header("TouchModeSetting")]
     [SerializeField]
@@ -28,14 +28,16 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField]
     LayerMask targetMark;
 
+    /*
     private void Awake()
     {
-        //touchCollider = GameObject.Find("TouchCollider").transform;
+        touchCollider = GameObject.Find("TouchCollider").transform;
     }
+    */
 
-    void Start()
+    public override void OnNetworkSpawn()
     {
-        timer = 0f;//初始化秒數
+        timer = 0;
     }
 
     void Update()
@@ -44,11 +46,11 @@ public class PlayerAttack : MonoBehaviour
 
         if (Input.GetMouseButton(1))
         {
-            if (Cursor.lockState == CursorLockMode.Locked) Shoot();
+            if (Cursor.lockState == CursorLockMode.Locked) ShootServerRpc();
         }
         else
         {
-            timer = 0f;//放開射擊計時歸0
+            timer = 0f; //放開射擊計時歸0
         }
     }
 
@@ -90,14 +92,14 @@ public class PlayerAttack : MonoBehaviour
         else if (Cursor.lockState == CursorLockMode.Locked) Cursor.SetCursor(null, hotSpot, cursorMode);//恢復預設遊標
     }
 
-    void Shoot()
+    [ServerRpc]
+    void ShootServerRpc()
     {
-        if (timer <= 0f)
+        if (timer <= 0)
         {
-            GameObject newarrow = Instantiate(arrowprefab, firePoint.position, firePoint.rotation);//生成一個新物體
-            timer = 1.5f;//執行完歸0
+            GameObject newarrow = Instantiate(arrowprefab, firePoint.position, firePoint.rotation);
+            timer = bulletDuration;
         }
-
         timer -= Time.deltaTime;
     }
 }
