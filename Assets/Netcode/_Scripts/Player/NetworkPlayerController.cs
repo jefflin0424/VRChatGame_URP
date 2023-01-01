@@ -53,7 +53,7 @@ public class NetworkPlayerController : NetworkBehaviour {
     public override void OnNetworkSpawn() {
         if (!IsOwner || IsHost)
         {
-            Destroy(GetComponent<PlayerAttack>());
+            //Destroy(GetComponent<PlayerAttack>());
             _camera.SetActive(false);
             Destroy(this);
         }
