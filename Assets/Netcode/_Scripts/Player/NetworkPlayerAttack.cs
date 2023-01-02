@@ -1,25 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Unity.Netcode;
 
-public class PlayerAttack : NetworkBehaviour
+public class NetworkPlayerAttack : NetworkBehaviour
 {
     [Header("ShootModeSetting")]
-    [SerializeField] float RayMaxDistance = 50, bulletDuration = 1.5f;
-    [SerializeField] Transform _touchCollider;
-
-    public GameObject arrowprefab;
-    public Transform firePoint;
-
-    [SerializeField] float timer = 0;
+    [SerializeField] float RayMaxDistance = 50f, bulletDuration = 1.2f, timer = 0f;
+    [SerializeField] Transform _touchCollider, arrowprefab, firePoint;
 
     [Header("TouchModeSetting")]
     [SerializeField]
-    Texture2D cursorTexture;
-
-    [SerializeField]
-    Texture2D cursorTexture2;
+    Texture2D cursorTexture, cursorTexture2;
 
     public CursorMode cursorMode = CursorMode.Auto;
 
@@ -37,23 +27,29 @@ public class PlayerAttack : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        timer = 0;
+        timer = 0f;
     }
 
     void Update()
     {
-        TouchStateDetection();
+        if (!IsOwner) return;
+
+        //TouchStateDetection();
 
         if (Input.GetMouseButton(1))
         {
-            if (Cursor.lockState == CursorLockMode.Locked) ShootServerRpc();
+            if (Cursor.lockState == CursorLockMode.Locked)
+            {
+                ShootServerRpc(); //request a clinetRpc shoot
+                Shoot(); //shoot locally
+            }
         }
         else
         {
             timer = 0f; //放開射擊計時歸0
         }
     }
-
+    /*
     void TouchStateDetection()
     {
         if (Cursor.lockState == CursorLockMode.None)
@@ -91,13 +87,24 @@ public class PlayerAttack : NetworkBehaviour
         }
         else if (Cursor.lockState == CursorLockMode.Locked) Cursor.SetCursor(null, hotSpot, cursorMode);//恢復預設遊標
     }
-
+    */
     [ServerRpc]
     void ShootServerRpc()
     {
-        if (timer <= 0)
+        ShootClientRpc();
+    }
+
+    [ClientRpc]
+    void ShootClientRpc()
+    {
+        if (!IsOwner) Shoot();
+    }
+
+    private void Shoot()
+    {
+        if (timer <= 0f)
         {
-            GameObject newarrow = Instantiate(arrowprefab, firePoint.position, firePoint.rotation);
+            GameObject newarrow = Instantiate(arrowprefab.gameObject, firePoint.position, firePoint.rotation);
             timer = bulletDuration;
         }
         timer -= Time.deltaTime;

@@ -55,9 +55,9 @@ public class NetworkPlayerController : NetworkBehaviour {
         {
             //Destroy(GetComponent<PlayerAttack>());
             _camera.SetActive(false);
-            Destroy(this);
+            this.enabled= false;
         }
 
-        transform.position = new Vector3(Random.Range(spawnArea.x, spawnArea.y), 0, Random.Range(spawnArea.x, spawnArea.y));
+        //transform.position = new Vector3(Random.Range(spawnArea.x, spawnArea.y), 0, Random.Range(spawnArea.x, spawnArea.y));
     }
 }
