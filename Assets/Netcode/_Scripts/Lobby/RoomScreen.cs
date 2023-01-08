@@ -15,7 +15,7 @@ public class RoomScreen : MonoBehaviour {
     [SerializeField] private LobbyPlayerPanel _playerPanelPrefab;
     [SerializeField] private Transform _playerPanelParent;
     [SerializeField] private TMP_Text _waitingText;
-    [SerializeField] private GameObject _startButton, _readyButton;
+    [SerializeField] private GameObject _startButton, _readyButton, _toggleVR;
 
     private readonly List<LobbyPlayerPanel> _playerPanels = new();
     private bool _allReady;
@@ -41,6 +41,8 @@ public class RoomScreen : MonoBehaviour {
     }
 
     public static event Action LobbyLeft;
+
+    public static bool toggleVR;
 
     public void OnLeaveLobby() {
         LobbyLeft?.Invoke();

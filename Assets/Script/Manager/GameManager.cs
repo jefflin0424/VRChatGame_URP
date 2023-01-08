@@ -20,7 +20,7 @@ public class GameManager : NetworkBehaviour {
         if(!IsHost)
         {
             Destroy(headTarget.GetComponent<ParentConstraint>());
-            Destroy(xrOrigin.gameObject);
+            if(RoomScreen.toggleVR) Destroy(xrOrigin.gameObject);
         }
     }   
 
