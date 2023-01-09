@@ -14,13 +14,14 @@ public class GameManager : NetworkBehaviour {
 
     #region netcode
     [SerializeField] private NetworkPlayerController _playerPrefab;
-    [SerializeField] Transform headTarget, xrOrigin;
+    [SerializeField] Transform _headTarget, _xrOrigin, _map;
     public override void OnNetworkSpawn() {
         SpawnPlayerServerRpc(NetworkManager.Singleton.LocalClientId);
+        if(!RoomScreen.showRoom) _map.gameObject.SetActive(false);
         if(!IsHost)
         {
-            Destroy(headTarget.GetComponent<ParentConstraint>());
-            if(RoomScreen.toggleVR) Destroy(xrOrigin.gameObject);
+            Destroy(_headTarget.GetComponent<ParentConstraint>());
+            if(RoomScreen.toggleVR) Destroy(_xrOrigin.gameObject);
         }
     }   
 

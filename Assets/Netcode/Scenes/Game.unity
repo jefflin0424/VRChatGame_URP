@@ -355,7 +355,7 @@ GameObject:
   - component: {fileID: 597799685}
   - component: {fileID: 597799686}
   m_Layer: 6
-  m_Name: Head (1)
+  m_Name: Head Target
   m_TagString: Head
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1240,8 +1240,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerPrefab: {fileID: 440449775408231757, guid: 8cc77ced8e6e50a45a1eb0e5862b6f5a,
     type: 3}
-  headTarget: {fileID: 597799683}
-  xrOrigin: {fileID: 8303908174331622688}
+  _headTarget: {fileID: 597799683}
+  _xrOrigin: {fileID: 8303908174331622688}
+  _map: {fileID: 2630368778147420578}
 --- !u!4 &1519578589
 Transform:
   m_ObjectHideFlags: 0
